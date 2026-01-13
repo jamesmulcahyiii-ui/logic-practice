@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Suite</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f4f4; }
+        section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { color: #333; border-bottom: 2px solid #eee; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 15px; padding: 15px; background: #e9ecef; border-left: 5px solid #007bff; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <h1>Multi-Tasking & Prioritization Suite</h1>
+
+    <section>
+        <h2>1. Eisenhower Matrix Automator</h2>
+        <p>Instructions: Enter a task and toggle urgency (time-sensitive) and importance (goal-aligned).</p>
+        <input type="text" id="e-task" placeholder="Task name...">
+        <select id="e-urgent">
+            <option value="yes">Urgent (Do it now)</option>
+            <option value="no">Not Urgent (Can wait)</option>
+        </select>
+        <select id="e-important">
+            <option value="yes">Important (High Value)</option>
+            <option value="no">Not Important (Low Value)</option>
+        </select>
+        <button onclick="runEisenhower()">Prioritize Task</button>
+        <div id="e-result" class="result">Result will appear here...</div>
+    </section>
+
+    <section>
+        <h2>2. Thematic Batching Planner</h2>
+        <p>Select your primary theme for the day to generate a structured flow.</p>
+        <select id="t-theme">
+            <option value="Academic">Academic (JD/MIT Focus)</option>
+            <option value="Creative">Creative (Script/Writing Focus)</option>
+            <option value="Admin">Administrative (LLC/Business Focus)</option>
+        </select>
+        <button onclick="runBatching()">Generate Schedule</button>
+        <div id="t-result" class="result">Schedule will appear here...</div>
+    </section>
+
+    <section>
+        <h2>3. "What I Got Done" to Agenda</h2>
+        <p>Paste your "Done" list to see suggested next steps.</p>
+        <textarea id="a-input" rows="5" placeholder="1. Dissolved LLCs... 2. Studied MIT..."></textarea>
+        <button onclick="runConverter()">Suggest Agenda</button>
+        <div id="a-result" class="result">Next steps will appear here...</div>
+    </section>
+
+    <script>
+        function runEisenhower() {
+            const task = document.getElementById('e-task').value;
+            const u = document.getElementById('e-urgent').value;
+            const i = document.getElementById('e-important').value;
+            let cat = "";
+            let action = "";
+
+            if (u === "yes" && i === "yes") { cat = "DO FIRST"; action = "High Priority: Complete this immediately."; }
+            else if (u === "no" && i === "yes") { cat = "SCHEDULE"; action = "Medium Priority: Put this on the calendar for deep work."; }
+            else if (u === "yes" && i === "no") { cat = "DELEGATE/AUTOMATE"; action = "Low Priority: Find a way to do this quickly or let someone else handle it."; }
+            else { cat = "ELIMINATE"; action = "Lowest Priority: Consider if this needs to be done at all."; }
+
+            document.getElementById('e-result').innerText = `Task: ${task}\nCategory: ${cat}\nAdvice: ${action}`;
+        }
+
+        function runBatching() {
+            const theme = document.getElementById('t-theme').value;
+            let schedule = `Theme: ${theme}\n\n`;
+            schedule += "Morning: Deep Focus " + theme + " blocks.\n";
+            schedule += "Mid-Day: Transition to secondary tasks (LinkedIn/Email).\n";
+            schedule += "Afternoon: Low-cognition tasks (Errands/Cleaning).\n";
+            schedule += "Evening: Recovery and planning for tomorrow.";
+            document.getElementById('t-result').innerText = schedule;
+        }
+
+        function runConverter() {
+            const input = document.getElementById('a-input').value.toLowerCase();
+            let suggestions = "Suggested Next Steps:\n";
+            if (input.includes("llc")) suggestions += "- Register new entities in NV/AZ.\n";
+            if (input.includes("mit") || input.includes("data")) suggestions += "- Apply algorithms to a practice dataset.\n";
+            if (input.includes("jd") || input.includes("contracts")) suggestions += "- Begin memorizing Torts or Property modules.\n";
+            if (input.includes("script")) suggestions += "- Conduct a table read of the new rewrite.\n";
+            document.getElementById('a-result').innerText = suggestions;
+        }
+    </script>
+</body>
+</html>
