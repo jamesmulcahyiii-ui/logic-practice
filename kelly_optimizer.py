@@ -20,7 +20,7 @@ def calculate_kelly_bet(bankroll, odds, win_probability):
 # Your current Sovereign Variables
 my_bankroll = 83.12
 current_odds = 2.10 # Example: A slight underdog
-estimated_win_prob = 0.52 # Your calculated 52% edge
+estimated_win_prob = 0.60 # Your calculated 52% edge
 
 suggested_bet = calculate_kelly_bet(my_bankroll, current_odds, estimated_win_prob)
 
